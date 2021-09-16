@@ -1,14 +1,13 @@
 package by.sherriice.calc.expressions;
 
-import by.sherriice.calc.ExpressionVisitor;
 import by.sherriice.calc.token.BinOpKind;
 
 public class BinaryExpressionImpl implements BinaryExpression {
     Expression left_expression;
     Expression right_expression;
-    String operation;
+    BinOpKind operation;
 
-    public BinaryExpressionImpl(String operation, Expression left_expression, Expression right_expression) {
+    public BinaryExpressionImpl(BinOpKind operation, Expression left_expression, Expression right_expression) {
         this.left_expression = left_expression;
         this.right_expression = right_expression;
         this.operation = operation;
@@ -25,7 +24,7 @@ public class BinaryExpressionImpl implements BinaryExpression {
     }
 
     @Override
-    public String getOperation() {
+    public BinOpKind getOperation() {
         return this.operation;
     }
 

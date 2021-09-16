@@ -9,7 +9,7 @@ public class ParenthesisExpressionImpl implements ParenthesisExpression{
 
     @Override
     public String debugRepresentation() {
-        return "(" + this.expression.debugRepresentation() + ")";
+        return "paran-expr(" + this.expression.debugRepresentation() + ")";
     }
 
     @Override
