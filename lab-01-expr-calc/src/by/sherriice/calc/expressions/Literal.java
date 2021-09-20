@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public interface Literal extends Expression {
     double getValue();
+    boolean isVariable();
     default double inputVariable(String literal) {
         System.out.println("value for '" + literal + "':");
         Scanner scanner = new Scanner(System.in);

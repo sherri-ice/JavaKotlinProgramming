@@ -14,15 +14,17 @@ public class LiteralImpl implements Literal{
         }
     }
     @Override
-    public String debugRepresentation() {
-        if (isVariable) {
-            return "var[" + literal + "]";
-        }
-        return '\'' + literal + '\'';
+    public double getValue() {
+        return Double.parseDouble(literal);
     }
 
     @Override
-    public double getValue() {
-        return Double.parseDouble(literal);
+    public boolean isVariable() {
+        return this.isVariable;
+    }
+
+    @Override
+    public String accept(ExpressionVisitor visitor) {
+        return visitor.visitLiteral(this);
     }
 }

@@ -28,8 +28,9 @@ public class BinaryExpressionImpl implements BinaryExpression {
         return this.operation;
     }
 
+
     @Override
-    public String debugRepresentation() {
-        return(operation + "( " + left_expression.debugRepresentation() + ", " + right_expression.debugRepresentation() + ")");
+    public String accept(ExpressionVisitor visitor) {
+        return visitor.visitBinaryExpression(this);
     }
 }

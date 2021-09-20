@@ -11,7 +11,8 @@ public class Main {
         Scanner in = new Scanner(System.in);
         Parser parser = new ParserImpl();
         var expr = parser.parseExpression(in.nextLine());
-        expr = parser.parseExpression(in.nextLine());
-        System.out.print(expr.debugRepresentation());
+        ExpressionVisitor visitor = new ExpressionVisitorImpl();
+        System.out.print(expr.accept(visitor));
+
     }
 }

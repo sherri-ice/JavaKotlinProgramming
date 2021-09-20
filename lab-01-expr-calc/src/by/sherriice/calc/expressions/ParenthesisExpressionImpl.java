@@ -8,12 +8,12 @@ public class ParenthesisExpressionImpl implements ParenthesisExpression{
     }
 
     @Override
-    public String debugRepresentation() {
-        return "paran-expr(" + this.expression.debugRepresentation() + ")";
+    public Expression getExpr() {
+        return this.expression;
     }
 
     @Override
-    public Expression getExpr() {
-        return this.expression;
+    public String accept(ExpressionVisitor visitor) {
+        return visitor.visitParenthesis(this);
     }
 }
