@@ -1,10 +1,15 @@
 package by.sherriice.calc.expressions;
 
-public class ComputeExpressionVisitor implements ExpressionVisitor {
-    private ComputeExpressionVisitor() {
-    }
+import java.net.DatagramPacket;
+import java.util.HashMap;
+import java.util.Map;
 
-    public static final ComputeExpressionVisitor INSTANCE = new ComputeExpressionVisitor();
+public class ComputeExpressionVisitor implements ExpressionVisitor {
+    private final Map<Character, Double> variables;
+
+    public ComputeExpressionVisitor(Map<Character, Double> variables) {
+        this.variables = variables;
+    }
 
     @Override
     public Object visitBinaryExpression(BinaryExpression expr) {
@@ -41,6 +46,11 @@ public class ComputeExpressionVisitor implements ExpressionVisitor {
     @Override
     public Object visitParenthesis(ParenthesisExpression expr) {
         return expr.getExpr().accept(this);
+    }
+
+    @Override
+    public Object visitVariable(Variable expr) {
+        return variables.get(expr.getSymbol());
     }
 
 }

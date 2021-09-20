@@ -1,12 +1,8 @@
 package by.sherriice.calc;
 
-import by.sherriice.calc.Parser;
-import by.sherriice.calc.ParserImpl;
-import by.sherriice.calc.expressions.ComputeExpressionVisitor;
-import by.sherriice.calc.expressions.DebugRepresentationExpressionVisitor;
-import by.sherriice.calc.expressions.ExpressionParseException;
-import by.sherriice.calc.expressions.TreeDepthVisitor;
+import by.sherriice.calc.expressions.*;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -16,7 +12,8 @@ public class Main {
 
         var expr = parser.parseExpression(in.nextLine());
         System.out.println(expr.accept(DebugRepresentationExpressionVisitor.INSTANCE));
-        System.out.println(expr.accept(ComputeExpressionVisitor.INSTANCE));
+        Map<Character, Double> variables= (Map<Character, Double>) expr.accept(VariableInputVisitor.INSTANCE);
+        System.out.println(expr.accept(new ComputeExpressionVisitor(variables)));
         System.out.println(expr.accept(TreeDepthVisitor.INSTANCE));
 
     }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class ParserImpl implements Parser {
-    boolean hasVariable = false;
 
     @Override
     public Expression parseExpression(String input) throws ExpressionParseException {
@@ -17,8 +16,11 @@ public class ParserImpl implements Parser {
         Stack<String> operations = new Stack<>();
         var tokens = parseTokens(input);
         for (String token : tokens) {
-            if (Character.isDigit(token.charAt(0)) || Character.isLetter(token.charAt(0))) {
+            if (Character.isDigit(token.charAt(0))) {
                 expressions.push(new LiteralImpl(token));
+            }
+            else if (Character.isLetter(token.charAt(0))) {
+                expressions.push(new VariableImpl(token.charAt(0)));
             } else if (isOperation(token.charAt(0))) {
                 if (token.equals("(")) {
                     operations.push(token);
@@ -78,7 +80,6 @@ public class ParserImpl implements Parser {
                 next_token.append(input.charAt(i));
             } else if (Character.isLetter(input.charAt(i)))  {
                 next_token.append(input.charAt(i));
-                hasVariable = true;
             } else if (Character.isDigit(input.charAt(i))) {
                 while (Character.isDigit(input.charAt(i)) || input.charAt(i) == '.') {
                     next_token.append(input.charAt(i));
