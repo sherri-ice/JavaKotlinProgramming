@@ -3,8 +3,8 @@ package by.sherriice.calc.expressions;
 public class ComputeExpressionVisitor implements ExpressionVisitor {
     @Override
     public Object visitBinaryExpression(BinaryExpression expr) {
-        Double first = (Double) expr.getRight().accept(this);
-        Double second = (Double) expr.getLeft().accept(this);
+        Double first = (Double) expr.getLeft().accept(this);
+        Double second = (Double) expr.getRight().accept(this);
 
         switch (expr.getOperation()) {
             case SUM -> {
@@ -17,7 +17,10 @@ public class ComputeExpressionVisitor implements ExpressionVisitor {
                 return first * second;
             }
             case DIV -> {
-                return first / second;
+                if (second == 0.) {
+                    throw new ArithmeticException("Division by zero!");
+                }
+                 return first / second;
             }
             default -> {
             }
