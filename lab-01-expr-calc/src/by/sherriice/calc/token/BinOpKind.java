@@ -22,22 +22,22 @@ public enum BinOpKind {
     DIV() {
         @Override
         public String toString() {
-            return "div{}";
+            return "div";
         }
     },
     UNKNOWN;
 
-    public static BinOpKind convertOperation(String input) {
-        if (input.equals("+")) {
+    public static BinOpKind fromString(String input) {
+        if ("+".equals(input)) {
             return BinOpKind.SUM;
         }
-        if (input.equals("-")) {
+        if ("-".equals(input)) {
             return BinOpKind.SUB;
         }
-        if (input.equals("*")) {
+        if ("*".equals(input)) {
             return BinOpKind.MUL;
         }
-        if (input.equals("/")) {
+        if ("/".equals(input)) {
             return BinOpKind.DIV;
         }
         return BinOpKind.UNKNOWN;

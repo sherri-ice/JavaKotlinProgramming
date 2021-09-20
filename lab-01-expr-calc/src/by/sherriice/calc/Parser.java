@@ -1,9 +1,8 @@
 package by.sherriice.calc;
 
-import by.sherriice.calc.exceptions.ExpressionParseException;
+import by.sherriice.calc.expressions.ExpressionParseException;
 import by.sherriice.calc.expressions.Expression;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -3,9 +3,9 @@ package by.sherriice.calc.expressions;
 import by.sherriice.calc.token.BinOpKind;
 
 public class BinaryExpressionImpl implements BinaryExpression {
-    Expression left_expression;
-    Expression right_expression;
-    BinOpKind operation;
+    private final Expression left_expression;
+    private final Expression right_expression;
+    private final BinOpKind operation;
 
     public BinaryExpressionImpl(BinOpKind operation, Expression left_expression, Expression right_expression) {
         this.left_expression = left_expression;

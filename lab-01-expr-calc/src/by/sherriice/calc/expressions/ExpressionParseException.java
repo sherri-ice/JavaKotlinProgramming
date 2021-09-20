@@ -1,4 +1,4 @@
-package by.sherriice.calc.exceptions;
+package by.sherriice.calc.expressions;
 
 public class ExpressionParseException extends Exception {
     public ExpressionParseException(String message) {
