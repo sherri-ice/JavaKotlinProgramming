@@ -24,7 +24,7 @@ public class LiteralImpl implements Literal{
     }
 
     @Override
-    public String accept(ExpressionVisitor visitor) {
+    public Object accept(ExpressionVisitor visitor) {
         return visitor.visitLiteral(this);
     }
 }

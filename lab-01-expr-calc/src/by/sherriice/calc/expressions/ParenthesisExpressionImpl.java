@@ -13,7 +13,7 @@ public class ParenthesisExpressionImpl implements ParenthesisExpression{
     }
 
     @Override
-    public String accept(ExpressionVisitor visitor) {
+    public Object accept(ExpressionVisitor visitor) {
         return visitor.visitParenthesis(this);
     }
 }

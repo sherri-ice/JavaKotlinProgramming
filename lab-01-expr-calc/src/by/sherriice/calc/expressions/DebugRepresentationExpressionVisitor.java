@@ -1,14 +1,14 @@
 package by.sherriice.calc.expressions;
 
-public class ExpressionVisitorImpl implements ExpressionVisitor {
+public class DebugRepresentationExpressionVisitor implements ExpressionVisitor {
     @Override
-    public String visitBinaryExpression(BinaryExpression expr) {
-        return (expr.getOperation() + "( " + expr.getLeft().accept(this) + ", " +
+    public Object visitBinaryExpression(BinaryExpression expr) {
+        return (expr.getOperation() + "(" + expr.getLeft().accept(this) + ", " +
                 expr.getRight().accept(this) + ")");
     }
 
     @Override
-    public String visitLiteral(Literal expr) {
+    public Object visitLiteral(Literal expr) {
         if (expr.isVariable()) {
             return "var[" + expr.getValue() + "]";
         }
@@ -16,7 +16,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor {
     }
 
     @Override
-    public String visitParenthesis(ParenthesisExpression expr) {
+    public Object visitParenthesis(ParenthesisExpression expr) {
         return "paran-expr(" + expr.getExpr().accept(this) + ")";
     }
 }
