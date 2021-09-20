@@ -9,9 +9,10 @@ public class Main {
     public static void main(String[] args) throws ExpressionParseException {
         Scanner in = new Scanner(System.in);
         Parser parser = new ParserImpl();
+
         var expr = parser.parseExpression(in.nextLine());
-        System.out.println(expr.accept(new DebugRepresentationExpressionVisitor()));
-        System.out.print(expr.accept(new ComputeExpressionVisitor()));
+        System.out.println(expr.accept(DebugRepresentationExpressionVisitor.INSTANCE));
+        System.out.print(expr.accept(ComputeExpressionVisitor.INSTANCE));
 
     }
 }

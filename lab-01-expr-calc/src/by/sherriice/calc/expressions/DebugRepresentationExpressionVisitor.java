@@ -1,6 +1,13 @@
 package by.sherriice.calc.expressions;
 
 public class DebugRepresentationExpressionVisitor implements ExpressionVisitor {
+
+    private DebugRepresentationExpressionVisitor() {
+    }
+
+    public final static DebugRepresentationExpressionVisitor INSTANCE = new DebugRepresentationExpressionVisitor();
+    private static int depth = 0;
+
     @Override
     public Object visitBinaryExpression(BinaryExpression expr) {
         return (expr.getOperation() + "(" + expr.getLeft().accept(this) + ", " +

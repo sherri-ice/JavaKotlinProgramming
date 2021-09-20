@@ -1,6 +1,11 @@
 package by.sherriice.calc.expressions;
 
 public class ComputeExpressionVisitor implements ExpressionVisitor {
+    private ComputeExpressionVisitor() {
+    }
+
+    public static final ComputeExpressionVisitor INSTANCE = new ComputeExpressionVisitor();
+
     @Override
     public Object visitBinaryExpression(BinaryExpression expr) {
         Double first = (Double) expr.getLeft().accept(this);
@@ -37,4 +42,5 @@ public class ComputeExpressionVisitor implements ExpressionVisitor {
     public Object visitParenthesis(ParenthesisExpression expr) {
         return expr.getExpr().accept(this);
     }
+
 }
