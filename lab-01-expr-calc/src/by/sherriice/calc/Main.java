@@ -1,6 +1,7 @@
 package by.sherriice.calc;
 
 import by.sherriice.calc.expressions.*;
+import by.sherriice.calc.test.ParserTest;
 
 import java.util.Map;
 import java.util.Scanner;
