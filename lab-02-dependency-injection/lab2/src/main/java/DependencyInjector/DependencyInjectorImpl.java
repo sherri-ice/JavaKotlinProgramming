@@ -11,27 +11,27 @@ public class DependencyInjectorImpl implements IDependencyInjector {
     private boolean isRegistrationFinished = false;
 
     List<Class<?>> classes = new ArrayList<>();
-    Map<Class<?>, Object> singletones = new HashMap<>();
+    Map<Class<?>, Object> singletons = new HashMap<>();
     Map<Class<?>, Class<?>> interfaces = new HashMap<>();
 
     Vector<Vector<Boolean>> graphDependency = new Vector<>();
 
     @Override
-    public void Register(Class<?> class_object) {
+    public void Register(Class<?> classObject) {
         if (isRegistrationFinished) {
             throw new RuntimeException("Cannot register class after finished registration.");
         }
-        if (Modifier.isAbstract(class_object.getModifiers())) {
-            throw new RuntimeException("Cannot register abstract class: " + class_object.getName());
+        if (Modifier.isAbstract(classObject.getModifiers())) {
+            throw new RuntimeException("Cannot register abstract class: " + classObject.getName());
         }
-        if (Modifier.isInterface(class_object.getModifiers())) {
+        if (Modifier.isInterface(classObject.getModifiers())) {
             throw new RuntimeException("Cannot register interface without its implementation, " +
-                    "use two argument .Register(Inteface, Implementation): " + class_object.getName());
+                    "use two argument .Register(Interface, Implementation): " + classObject.getName());
         }
-        if (classes.contains(class_object)) {
-            throw new RuntimeException(class_object.getName() + " already registered.");
+        if (classes.contains(classObject)) {
+            throw new RuntimeException(classObject.getName() + " already registered.");
         }
-        classes.add(class_object);
+        classes.add(classObject);
     }
 
     @Override
@@ -70,21 +70,21 @@ public class DependencyInjectorImpl implements IDependencyInjector {
         }
     }
 
-    private void CreateAllSingletones() throws InvocationTargetException, InstantiationException, IllegalAccessException {
+    private void CreateAllSingletons() throws InvocationTargetException, InstantiationException, IllegalAccessException {
         for (var classObject : classes) {
             if (classObject.isAnnotationPresent(Singleton.class)) {
-                singletones.put(classObject, GetInstance(classObject));
+                singletons.put(classObject, GetInstance(classObject));
             }
         }
     }
 
-    private void HandleClassForGraph(Class<?> class_object) throws NoSuchMethodException {
-        var constructor = GetAnnotatedInjectConstructor(class_object);
+    private void HandleClassForGraph(Class<?> classObject) throws NoSuchMethodException {
+        var constructor = GetAnnotatedInjectConstructor(classObject);
         List<Class<?>> dependencyClasses = List.of(constructor.getParameterTypes());
-        int classObjectIndex = classes.indexOf(class_object);
+        int classObjectIndex = classes.indexOf(classObject);
         for (var dependencyClass : dependencyClasses) {
             if (!classes.contains(dependencyClass)) {
-                throw new RuntimeException("Requested " + dependencyClass.getName() + " in " + class_object.getName() +
+                throw new RuntimeException("Requested " + dependencyClass.getName() + " in " + classObject.getName() +
                         " wasn't registered.");
             }
             int dependencyClassIndex = classes.indexOf(dependencyClass);
@@ -122,18 +122,18 @@ public class DependencyInjectorImpl implements IDependencyInjector {
     public void CompleteRegistration() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         isRegistrationFinished = true;
         CreateDependencyGraph();
-        CreateAllSingletones();
+        CreateAllSingletons();
     }
 
     @Override
-    public Object Resolve(Class<?> class_object) throws InvocationTargetException, InstantiationException, IllegalAccessException {
+    public Object Resolve(Class<?> classObject) throws InvocationTargetException, InstantiationException, IllegalAccessException {
         if (!isRegistrationFinished) {
             throw new RuntimeException("Registration wasn't finished.");
         }
-        if (!classes.contains(class_object) && !interfaces.containsKey(class_object)) {
-            throw new RuntimeException("Class " + class_object.getName() + " wasn't registered.");
+        if (!classes.contains(classObject) && !interfaces.containsKey(classObject)) {
+            throw new RuntimeException("Class " + classObject.getName() + " wasn't registered.");
         }
-        return GetInstance(class_object);
+        return GetInstance(classObject);
     }
 
     private Object GetInstance(Class<?> classObject) throws InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -141,8 +141,8 @@ public class DependencyInjectorImpl implements IDependencyInjector {
             return GetInstance(interfaces.get(classObject));
         }
         var constructor = GetAnnotatedInjectConstructor(classObject);
-        if (classObject.isAnnotationPresent(Singleton.class) && singletones.containsKey(classObject)) {
-            return singletones.get(classObject);
+        if (classObject.isAnnotationPresent(Singleton.class) && singletons.containsKey(classObject)) {
+            return singletons.get(classObject);
         }
         var dependencyClasses = constructor.getParameterTypes();
         var instantiatedObjects = new ArrayList<>();
