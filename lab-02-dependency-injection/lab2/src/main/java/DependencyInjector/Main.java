@@ -1,7 +1,7 @@
 package DependencyInjector;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello from Gradle!");
+    public static void main(String[] args) throws NoSuchMethodException {
+
     }
 }
